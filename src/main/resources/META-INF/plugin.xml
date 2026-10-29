@@ -1,0 +1,29 @@
+<idea-plugin>
+    <id>dev.personal.live-log-lens</id>
+    <name>Live Log Lens</name>
+    <vendor>Personal</vendor>
+    <description><![CDATA[
+        Local-only helper that makes live Run/Debug console logs easier to read:
+        level highlighting, source-location links, optional folding of bootstrap noise,
+        and a tool window that pretty-prints the JSON payload of Olympus-style log events.
+        No network, no telemetry, no files.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <consoleFilterProvider implementation="dev.personal.livelog.LogLensConsoleFilterProvider"/>
+        <console.folding implementation="dev.personal.livelog.LogLensConsoleFolding"/>
+        <applicationService serviceImplementation="dev.personal.livelog.LogLensSettings"/>
+        <projectService serviceImplementation="dev.personal.livelog.LogEventStore"/>
+        <applicationConfigurable parentId="tools" instance="dev.personal.livelog.LogLensConfigurable"
+                                 id="dev.personal.livelog.settings" displayName="Live Log Lens"/>
+        <toolWindow id="Live Log Lens" anchor="bottom" canCloseContents="false"
+                    factoryClass="dev.personal.livelog.LogLensToolWindowFactory"/>
+    </extensions>
+
+    <projectListeners>
+        <listener class="dev.personal.livelog.LogLensExecutionListener"
+                  topic="com.intellij.execution.ExecutionListener"/>
+    </projectListeners>
+</idea-plugin>

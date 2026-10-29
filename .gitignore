@@ -1,0 +1,9 @@
+.gradle/
+build/
+.intellijPlatform/
+.idea/
+*.iml
+.DS_Store
+# private worknotes (never tracked)
+local_work_notes/
+CLAUDE.local.md
